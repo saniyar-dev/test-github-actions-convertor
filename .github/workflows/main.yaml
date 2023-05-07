@@ -4,10 +4,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup env
-        env:
-          REGISTRY: "registry.hamdocker.ir/demo-org"
-          REGISTRY_PASSWORD: "demo-org"
-          REGISTRY_USER: "L7c1qn1tbzhmldBG"
+        env: |
+          REGISTRY: ${{ env.REGISTRY }}
+          REGISTRY_PASSWORD: ${{ env.REGISTRY_PASSWORD }}
+          REGISTRY_USER: ${{ env.REGISTRY_USER }}
       - name: Run script
         run: export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
       - name: Run script
