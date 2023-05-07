@@ -6,7 +6,5 @@ COPY hello.py .
 
 RUN pip install flask
 
-EXPOSE 3000
-
 CMD ["python", "hello.py"]
 
