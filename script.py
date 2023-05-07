@@ -16,15 +16,6 @@ github_data = {
         }
     },
     "jobs": {
-        "build": {
-            "runs-on": "ubuntu-latest",
-            "steps": [
-                {
-                    "name": "Checkout code",
-                    "uses": "actions/checkout@v2"
-                }
-            ]
-        }
     }
 }
 
@@ -32,7 +23,8 @@ for job_name, job_data in gitlab_data.items():
     github_data["on"]["push"]["branches"].append(
         job_data.get("only").get("refs")[0])
     github_job = {
-        "runs-on": job_data.get("image"),
+        "runs-on": "ubuntu-latest",
+        "container": job_data.get("image"),
         "steps": [
             {"name": "Checkout code", "uses": "actions/checkout@v2"}
         ]
