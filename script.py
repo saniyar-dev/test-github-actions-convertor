@@ -26,7 +26,6 @@ for job_name, job_data in gitlab_data.items():
         "runs-on": "ubuntu-latest",
         "container": job_data.get("image"),
         "steps": [
-            {"name": "Checkout code", "uses": "actions/checkout@v2"}
         ]
     }
     scripts = job_data.get("script")
