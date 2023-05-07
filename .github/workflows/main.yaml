@@ -30,12 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run script
-        run: |
-          echo $GITHUB_SHA
-          echo $GITHUB_JOB
-          echo ${{ github.sha }}
-          echo ${{ github.job }}
-          darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
+        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
