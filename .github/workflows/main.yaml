@@ -3,38 +3,26 @@ jobs:
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
-      - name: Setup env
-        run: |
-          echo "REGISTRY: $REGISTRY"
-          echo "REGISTRY_PASSWORD: $REGISTRY_PASSWORD"
-          echo "REGISTRY_USER: $REGISTRY_USER"
+      - name: Run script
+        run: darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
-      - name: Run script
-        run: export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
-      - name: Run script
-        run: |
-          echo "REGISTRY: $REGISTRY"
-          echo "REGISTRY_PASSWORD: $REGISTRY_PASSWORD"
-          echo "REGISTRY_USER: $REGISTRY_USER"
-          darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
+          IMAGE: "registry.hamdocker.ir/demo-org/test-github-action-convertor"
   darkube_deploy_test-github-action-convertor_demo-org:
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
-      - name: Setup env
-        run: |
-          echo "REGISTRY: $REGISTRY"
-          echo "REGISTRY_PASSWORD: $REGISTRY_PASSWORD"
-          echo "REGISTRY_USER: $REGISTRY_USER"
+      - name: Run script
+        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
-      - name: Run script
-        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
+          DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_DEPLOY_TOKEN: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_DEPLOY_TOKEN }}
+          DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_APP_ID: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_APP_ID }}
+
 name: CI/CD Pipeline
 "on":
   push:
