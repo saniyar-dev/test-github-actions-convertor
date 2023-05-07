@@ -11,8 +11,12 @@ jobs:
           echo $REGISTRY
           echo $REGISTRY_USER
           echo $REGISTRY_PASSWORD
+          echo $GITHUB_SHA
+          echo $GITHUB_JOB
+          echo ${{ github.sha }}
+          echo ${{ github.job }}
           docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
-          docker build -t $IMAGE .
+          docker build -t "$IMAGE:$GITHUB_SHA" .
           docker push $IMAGE
           # darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
         env:
@@ -26,7 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run script
-        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
+        run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_JOB
+          echo ${{ github.sha }}
+          echo ${{ github.job }}
+          darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
