@@ -1,4 +1,9 @@
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
   darkube_build_test-github-action-convertor_demo-org:
     runs-on: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     steps:
