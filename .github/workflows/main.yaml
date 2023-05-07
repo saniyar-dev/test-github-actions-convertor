@@ -3,6 +3,8 @@ jobs:
     # container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Run script
         run: |
           ls -la
