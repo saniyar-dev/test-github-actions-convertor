@@ -1,26 +1,20 @@
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
   darkube_build_test-github-action-convertor_demo-org:
     runs-on: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: export Variables
+        run: export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
       - name: Run script
-        run:
-          - export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
-          - "darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context . "
+        run: "darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context . "
   darkube_deploy_test-github-action-convertor_demo-org:
     runs-on: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Run script
-        run:
-          - darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
+        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
 name: CI/CD Pipeline
 "on":
   push:
