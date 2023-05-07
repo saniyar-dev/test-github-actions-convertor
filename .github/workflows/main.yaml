@@ -7,14 +7,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Run script
         run: |
-          ls -la
-          echo $REGISTRY
-          echo $REGISTRY_USER
-          echo $REGISTRY_PASSWORD
-          echo $GITHUB_SHA
-          echo $GITHUB_JOB
-          echo ${{ github.sha }}
-          echo ${{ github.job }}
           docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
           docker build -t "$IMAGE:$GITHUB_SHA" .
           docker push "$IMAGE:$GITHUB_SHA"
@@ -32,9 +24,6 @@ jobs:
       - name: Run script
         run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
         env:
-          REGISTRY: ${{ vars.REGISTRY }}
-          REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
-          REGISTRY_USER: ${{ vars.REGISTRY_USER }}
           DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_DEPLOY_TOKEN }}
           DARKUBE_test_github_action_convertor_demo_org_APP_ID: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_APP_ID }}
 
