@@ -8,5 +8,5 @@ RUN pip install flask
 
 EXPOSE 3000
 
-CMD ["python", "app.py"]
+CMD ["python", "hello.py"]
 
