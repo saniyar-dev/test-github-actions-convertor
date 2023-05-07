@@ -15,7 +15,11 @@ jobs:
       - name: Run script
         run: export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
       - name: Run script
-        run: "darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context . "
+        run: |
+          echo "REGISTRY: $REGISTRY"
+          echo "REGISTRY_PASSWORD: $REGISTRY_PASSWORD"
+          echo "REGISTRY_USER: $REGISTRY_USER"
+          darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
   darkube_deploy_test-github-action-convertor_demo-org:
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
