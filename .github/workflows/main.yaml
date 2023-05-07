@@ -8,7 +8,7 @@ jobs:
       - name: Run script
         run: |
           ls -la
-          echo $REIGSTRY
+          echo $REGISTRY
           echo $REGISTRY_USER
           echo $REGISTRY_PASSWORD
           docker build -t $IMAGE .
