@@ -8,6 +8,9 @@ jobs:
       - name: Run script
         run: |
           ls -la
+          echo $REIGSTRY
+          echo $REGISTRY_USER
+          echo $REGISTRY_PASSWORD
           docker build -t $IMAGE .
           docker login $REGISTRY -u $REGISTRY_USER -p REGISTRY_PASSWORD
           docker push $IMAGE
