@@ -1,7 +1,7 @@
 import yaml
 
 # Read GitLab CI/CD YAML file
-with open(".gitlab-ci.yaml", "r") as f:
+with open(".gitlab-ci.yml", "r") as f:
     gitlab_yaml = f.read()
 
 # Parse YAML
