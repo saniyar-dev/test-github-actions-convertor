@@ -3,9 +3,6 @@ jobs:
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
-      - name: Setup env
-        env:
-          REGISTRY: ${{ vars.REGISTRY }}
       - name: Run script
         run: export IMAGE="registry.hamdocker.ir/demo-org/test-github-action-convertor"
       - name: Run script
