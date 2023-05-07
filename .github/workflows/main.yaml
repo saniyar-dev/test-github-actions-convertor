@@ -5,7 +5,7 @@ jobs:
     steps:
       - name: Run script
         run: |
-          makedir .docker
+          mkdir .docker
           darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
         env:
           REGISTRY: ${{ vars.REGISTRY }}
