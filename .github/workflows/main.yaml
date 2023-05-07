@@ -11,7 +11,7 @@ jobs:
           echo $REGISTRY
           echo $REGISTRY_USER
           echo $REGISTRY_PASSWORD
-          docker login $REGISTRY -u $REGISTRY_USER -p REGISTRY_PASSWORD
+          docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
           docker build -t $IMAGE .
           docker push $IMAGE
           # darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
