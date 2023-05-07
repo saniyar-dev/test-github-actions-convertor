@@ -14,11 +14,6 @@ jobs:
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
-      - name: Setup env
-        env:
-          REGISTRY: ${{ vars.REGISTRY }}
-          REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
-          REGISTRY_USER: ${{ vars.REGISTRY_USER }}
       - name: Run script
         run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "${CI_COMMIT_SHORT_SHA}" --job-id "${CI_JOB_ID}" --stateless-app true
 name: CI/CD Pipeline
