@@ -1,6 +1,6 @@
 jobs:
   darkube_build_test-github-action-convertor_demo-org:
-    # container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
+    container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -9,9 +9,9 @@ jobs:
         run: |
           ls -la
           # docker build -t $IMAGE .
-          docker login $REGISTRY -u $REGISTRY_USER -p REGISTRY_PASSWORD
+          # docker login $REGISTRY -u $REGISTRY_USER -p REGISTRY_PASSWORD
           # docker push $IMAGE
-          # darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
+          darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
