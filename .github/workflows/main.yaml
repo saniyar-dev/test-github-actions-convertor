@@ -21,6 +21,7 @@ jobs:
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
           IMAGE: "registry.hamdocker.ir/demo-org/test-github-action-convertor"
   darkube_deploy_test-github-action-convertor_demo-org:
+    needs: darkube_build_test-github-action-convertor_demo-org
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
