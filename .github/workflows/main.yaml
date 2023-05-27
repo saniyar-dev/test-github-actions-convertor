@@ -8,25 +8,23 @@ jobs:
         run: |
           docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
           docker build -t "$IMAGE:$GITHUB_SHA" .
-          docker push "$IMAGE:$IMAGE_TAG"
+          docker push "$IMAGE:${GITHUB_SHA:0:7}"
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
           APP_NAME: ${{ vars.APP_NAME }}
           IMAGE: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}
-          IMAGE_TAG: ${{ GITHUB_SHA::7 }}
   darkube_deploy:
     needs: build
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
       - name: Run script
-        run: darkube deploy --ref master --token ${DARKUBE_DEPLOY_TOKEN} --app-id ${DARKUBE_APP_ID}  --image-tag "$IMAGE_TAG" --job-id "$GITHUB_JOB" --stateless-app true
+        run: darkube deploy --ref master --token ${DARKUBE_DEPLOY_TOKEN} --app-id ${DARKUBE_APP_ID}  --image-tag "${GITHUB_SHA:0:7}" --job-id "$GITHUB_JOB" --stateless-app true
         env:
           DARKUBE_DEPLOY_TOKEN: ${{ vars.DARKUBE_DEPLOY_TOKEN }}
           DARKUBE_APP_ID: ${{ vars.DARKUBE_APP_ID }}
-          IMAGE_TAG: ${{ GITHUB_SHA::7 }}
 
 name: CI/CD Pipeline
 "on":
