@@ -14,7 +14,7 @@ jobs:
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
           APP_NAME: ${{ vars.APP_NAME }}
-          IMAGE: ${{ vars.REGISTRY }}+${{ vars.APP_NAME }}
+          IMAGE: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}
   darkube_deploy:
     needs: build
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
