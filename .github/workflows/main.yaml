@@ -15,7 +15,7 @@ jobs:
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
           APP_NAME: ${{ vars.APP_NAME }}
           IMAGE: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}
-          IMAGE_TAG: ${GITHUB_SHA::7}
+          IMAGE_TAG: ${{ GITHUB_SHA::7 }}
   darkube_deploy:
     needs: build
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
@@ -26,7 +26,7 @@ jobs:
         env:
           DARKUBE_DEPLOY_TOKEN: ${{ vars.DARKUBE_DEPLOY_TOKEN }}
           DARKUBE_APP_ID: ${{ vars.DARKUBE_APP_ID }}
-          IMAGE_TAG: ${GITHUB_SHA::7}
+          IMAGE_TAG: ${{ GITHUB_SHA::7 }}
 
 name: CI/CD Pipeline
 "on":
