@@ -1,6 +1,5 @@
 jobs:
-  darkube_build_test-github-action-convertor_demo-org:
-    # container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -10,22 +9,22 @@ jobs:
           docker login $REGISTRY -u $REGISTRY_USER -p $REGISTRY_PASSWORD
           docker build -t "$IMAGE:$GITHUB_SHA" .
           docker push "$IMAGE:$GITHUB_SHA"
-          # darkube build --push -t $IMAGE:$CI_COMMIT_SHORT_SHA -t $IMAGE:$CI_COMMIT_REF_SLUG  --workdir . --file ./Dockerfile --build-context .
         env:
           REGISTRY: ${{ vars.REGISTRY }}
           REGISTRY_PASSWORD: ${{ vars.REGISTRY_PASSWORD }}
           REGISTRY_USER: ${{ vars.REGISTRY_USER }}
-          IMAGE: "registry.hamdocker.ir/demo-org/test-github-action-convertor"
-  darkube_deploy_test-github-action-convertor_demo-org:
-    needs: darkube_build_test-github-action-convertor_demo-org
+          APP_NAME: ${{ vars.APP_NAME }}
+          IMAGE: "$REGISTRY/$APP_NAME"
+  darkube_deploy:
+    needs: build
     container: hamravesh.hamdocker.ir/public/darkube-cli:v1.1
     runs-on: ubuntu-latest
     steps:
       - name: Run script
-        run: darkube deploy --ref master --token ${DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN} --app-id ${DARKUBE_test_github_action_convertor_demo_org_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
+        run: darkube deploy --ref master --token ${DARKUBE_DEPLOY_TOKEN} --app-id ${DARKUBE_APP_ID}  --image-tag "$GITHUB_SHA" --job-id "$GITHUB_JOB" --stateless-app true
         env:
-          DARKUBE_test_github_action_convertor_demo_org_DEPLOY_TOKEN: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_DEPLOY_TOKEN }}
-          DARKUBE_test_github_action_convertor_demo_org_APP_ID: ${{ vars.DARKUBE_TEST_GITHUB_ACTION_CONVERTOR_DEMO_ORG_APP_ID }}
+          DARKUBE_DEPLOY_TOKEN: ${{ vars.DARKUBE_DEPLOY_TOKEN }}
+          DARKUBE_APP_ID: ${{ vars.DARKUBE_APP_ID }}
 
 name: CI/CD Pipeline
 "on":
